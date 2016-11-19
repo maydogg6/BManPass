@@ -1,46 +1,46 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BManPass {
+public class BombermanPassword {
 
 	private ArrayList<String> letterArrayList; 
 	private static String[] letterList = new String[] {"B","H","M","J","D","N","I","A","O","F","K","C","P","G","E","L"};
-	private static Integer[] addB = new Integer[] {0,0,0,0,0,1,-1,1,-1,2,-1,1,-1,1,0,0,0,0,0,4};
-	private static Integer[] addR = new Integer[] {0,0,0,0,0,1,0,0,0,2,-2,2,-2,2,-2,2,-2,2,-2,6};
-	private static Integer[] addS = new Integer[] {0,0,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,0};
-	private static Integer[] addSAlt = new Integer[] {0,0,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-1,1,2};
-	private static Integer[] addSc = new Integer[] {1,-1,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,0};
-	private static Integer[] addSc9 = new Integer[] {7,-7,7,-7,-2,3,-3,3,-3,4,-4,4,-4,4,-4,4,-4,4,-4,4};
+	private static Integer[] addBombs = new Integer[] {0,0,0,0,0,1,-1,1,-1,2,-1,1,-1,1,0,0,0,0,0,4};
+	private static Integer[] addRange = new Integer[] {0,0,0,0,0,1,0,0,0,2,-2,2,-2,2,-2,2,-2,2,-2,6};
+	private static Integer[] addStage = new Integer[] {0,0,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,0};
+	private static Integer[] addStageAlt = new Integer[] {0,0,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-1,1,2};
+	private static Integer[] addScore = new Integer[] {1,-1,1,-1,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,-2,2,0};
+	private static Integer[] addScore9 = new Integer[] {7,-7,7,-7,-2,3,-3,3,-3,4,-4,4,-4,4,-4,4,-4,4,-4,4};
 	
-	private ArrayList<String> pass;
-	int currentS = 3;
-	int currentB = 2;
-	int currentR = 2;
-	int currentSc = 15100;
+	private ArrayList<String> password;
+	int currentStage = 3;
+	int currentBombs = 2;
+	int currentRange = 2;
+	int currentScore = 15100;
 	
 	public static void main(String[] args) {
-		BManPass bManPass = new BManPass();
-		bManPass.loadLists();
-		bManPass.getNewPass(19,5,3,10000);
-		bManPass.printPass();				
+		BombermanPassword bombermanPassword = new BombermanPassword();
+		bombermanPassword.loadLists();
+		bombermanPassword.getNewPass(19,5,3,10000);
+		bombermanPassword.printPass();				
 	}
 	
 	private void loadLists() {
 		letterArrayList = new ArrayList<String>(Arrays.asList(letterList));
-		pass = new ArrayList<String>(Arrays.asList(new String[]{"H","I","D","J","O","I","J","D","J","G","C","P","C","P","P","C","P","C","P","A"}));
+		password = new ArrayList<String>(Arrays.asList(new String[]{"H","I","D","J","O","I","J","D","J","G","C","P","C","P","P","C","P","C","P","A"}));
 	}
 	
 	private void getNewPass(int sToAdd, int bToAdd, int rToAdd, int scToAdd) {
-		addSs(sToAdd);
-		addBs(bToAdd);
-		addRs(rToAdd);
-		addSc(scToAdd);
+		addStages(sToAdd);
+		addBombs(bToAdd);
+		addRanges(rToAdd);
+		addScores(scToAdd);
 	}
 	
-	private void addSs(int sToAdd) {
+	private void addStages(int stagesToAdd) {
 		
-		for (int i=0; i<sToAdd; i++) {
-			switch (currentS) {
+		for (int i=0; i<stagesToAdd; i++) {
+			switch (currentStage) {
 				case 0:
 				case 15:
 				case 31:
@@ -54,39 +54,39 @@ public class BManPass {
 					break;
 			}
 			
-			currentS++;
+			currentStage++;
 			printPass();
 		}
 	}
 	
-	private void addBs(int bToAdd) {
-		for (int i=0; i<bToAdd; i++) {
+	private void addBombs(int bombsToAdd) {
+		for (int i=0; i<bombsToAdd; i++) {
 			updatePass(0);
-			System.out.println("add b");
-			currentB++;
+			System.out.println("add bomb");
+			currentBombs++;
 			printPass();			
 		}
 	}
 
-	private void addRs(int rToAdd) {
-		for (int i=0; i<rToAdd; i++) {
+	private void addRanges(int rangesToAdd) {
+		for (int i=0; i<rangesToAdd; i++) {
 			updatePass(1);
-			System.out.println("add r");
-			currentR++;
+			System.out.println("add range");
+			currentRange++;
 			printPass();			
 		}
 	}
 	
-	private void addSc(int scToAdd) {
-		System.out.println("add sc");
-		for (int i=0; i<scToAdd; i+=100) {
-			if ((currentSc%1000) == 900) {
+	private void addScores(int scoreToAdd) {
+		System.out.println("add score");
+		for (int i=0; i<scoreToAdd; i+=100) {
+			if ((currentScore%1000) == 900) {
 				updatePass(5);
 			} else {
 				updatePass(4);
 			}
 						
-			currentSc+=100;
+			currentScore+=100;
 			printPass();
 		}
 		printPass();
@@ -96,43 +96,43 @@ public class BManPass {
 		Integer[] formula;
 		switch (formulaFlag) {
 			case 0:
-				formula = addB;
+				formula = addBombs;
 				break;
 			case 1:
-				formula = addR;
+				formula = addRange;
 				break;
 			case 2:
-				formula = addS;
+				formula = addStage;
 				break;
 			case 3:	
-				formula = addSAlt;
+				formula = addStageAlt;
 				break;
 			case 4:
-				formula = addSc;
+				formula = addScore;
 				break;
 			case 5:
-				formula = addSc9;
+				formula = addScore9;
 				break;
 			default:
-				formula = addSc;
+				formula = addScore;
 				break;
 		}
 		
-		for (int i=0; i<pass.size(); i++) {
-			String letter = pass.get(i);
+		for (int i=0; i<password.size(); i++) {
+			String letter = password.get(i);
 			int value = letterArrayList.indexOf(letter);
 			int change = formula[i];
 			value = (value + change + 16) % 16;
 			letter = letterArrayList.get(value);
-			pass.set(i, letter);
+			password.set(i, letter);
 			
 		}
 		
 	}
 
 	private void printPass() {
-		System.out.println("S-" + currentS + " : B-" + currentB + " : R-" + currentR + " : S-+" + currentSc );
-		System.out.println(pass.toString() + "\n");	
+		System.out.println("Stage-" + currentStage + " : Bombs-" + currentBombs + " : Range-" + currentRange + " : Score-+" + currentScore );
+		System.out.println(password.toString() + "\n");	
 	}
 
 }
